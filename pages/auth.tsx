@@ -47,7 +47,7 @@ const Auth = () => {
                             value={password}
                           />
                         </div>
-                        <button className="bg-green-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition
+                        <button className="bg-green-600 py-3 text-white rounded-md w-full mt-10 hover:bg-green-700 transition
                         ">
                             {variant == 'login' ? 'Login' : 'Sign up'}
                         </button>
