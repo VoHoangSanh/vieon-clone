@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { compare } from 'bcryptjs'; // Use bcryptjs instead of bcrypt
+import bcrypt from 'bcryptjs'; // Use bcryptjs
+import prismadb from '@/lib/prismadb'; // Ensure this path is correct
 
 export default NextAuth({
     providers: [
@@ -29,7 +30,7 @@ export default NextAuth({
                 if (!user || !user.hashedPassword) {
                     throw new Error('Email does not exist');
                 }
-                const isCorrectPassword = await compare(
+                const isCorrectPassword = await bcrypt.compare(
                     credentials.password,
                     user.hashedPassword
                 );
@@ -40,7 +41,6 @@ export default NextAuth({
             }
         })
     ],
-    // Fixed typo from "page" to "pages"
     pages: {
         signIn: '/auth',
     },
@@ -48,4 +48,8 @@ export default NextAuth({
     session: {
         strategy: 'jwt',
     },
+    jwt: {
+        secret: process.env.NEXTAUTH_JWT_SECRET,
+    },
+    secret: process.env.NEXTAUTH_SECRET
 });

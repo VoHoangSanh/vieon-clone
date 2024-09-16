@@ -1,4 +1,6 @@
 import Input from "../components/input";
+import axios from "axios";
+
 import {useCallback, useState } from "react";
 const Auth = () => {
     const [email, setEmail] = useState('')
@@ -8,8 +10,22 @@ const Auth = () => {
     const [variant, setVariant] = useState('login')
     const tongleVariant = useCallback(() =>{
 
-        setVariant((currentVariant) => currentVariant == 'login' ? 'register' : 'login')    
+        setVariant((currentVariant) => currentVariant === 'login' ? 'register' : 'login')    
     }, []);
+    const register = useCallback(async()=>{
+        try{
+            await axios.post('/api/register',{
+               email,
+               name,
+               password 
+            });
+        
+        }catch(error){
+            console.log(error);
+        }
+
+
+    },[]);
     return (
         <div className="relative h-full w-full bg-[url('/images/1.png')] bg-no-repeat bg-center bg-fixed bg-cover">
             <div className="bg-black w-full h-full lg:bg-opacity-50">
